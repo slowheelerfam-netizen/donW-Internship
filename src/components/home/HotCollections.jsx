@@ -4,7 +4,7 @@ import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import Skeleton from "../UI/Skeleton";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
@@ -40,80 +40,66 @@ const HotCollections = () => {
 
           <div className="col-lg-12">
             {loading ? (
-              <div style={{ display: "flex", gap: "10px" }}>
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} style={{ flex: "0 0 25%", padding: "0 10px" }}>
-                    <div className="nft_coll" style={{ overflow: "hidden", borderRadius: "10px" }}>
-                      {/* Main image */}
-                      <Skeleton width="100%" height="200px" borderRadius="10px 10px 0 0" />
-                      {/* Author thumbnail */}
-                      <div style={{ position: "relative", marginTop: "-20px", paddingLeft: "15px" }}>
-                        <Skeleton width="50px" height="50px" borderRadius="50%" />
-                      </div>
-                      {/* Title and code */}
-                      <div style={{ padding: "10px 15px 15px" }}>
-                        <Skeleton width="80%" height="18px" borderRadius="4px" />
-                        <div style={{ marginTop: "8px" }}>
-                          <Skeleton width="50%" height="14px" borderRadius="4px" />
-                        </div>
-                      </div>
+            <div style={{ display: "flex", gap: "10px" }}>
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} style={{ flex: "0 0 25%", padding: "0 10px" }}>
+                  <SkeletonCard type="collection" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <OwlCarousel
+              className="owl-theme"
+              loop
+              margin={10}
+              nav
+              dots={false}
+              items={4}
+              dragEndSpeed={300}
+              smartSpeed={400}
+              responsive={{
+                0: { items: 1 },
+                600: { items: 2 },
+                900: { items: 3 },
+                1200: { items: 4 },
+              }}
+            >
+              {collections.map((collection) => (
+                <div className="item" key={collection.id}>
+                  <div className="nft_coll" style={{ overflow: "hidden", borderRadius: "10px" }}>
+                    <div className="nft_wrap" style={{ overflow: "hidden", marginTop: "-60px", borderRadius: "10px" }}>
+                      <Link to={`/item-details/${collection.nftId}`}>
+                        <img
+                          src={collection.nftImage}
+                          className="lazy img-fluid"
+                          alt=""
+                          style={{ marginTop: "60px" }}
+                          draggable="false"
+                        />
+                      </Link>
+                    </div>
+                    <div className="nft_coll_pp">
+                      <Link to={`/author/${collection.authorId}`}>
+                        <img
+                          className="lazy pp-coll"
+                          src={collection.authorImage}
+                          alt=""
+                          draggable="false"
+                        />
+                      </Link>
+                      <i className="fa fa-check"></i>
+                    </div>
+                    <div className="nft_coll_info">
+                      <Link to="/explore">
+                        <h4>{collection.title}</h4>
+                      </Link>
+                      <span>ERC-{collection.code}</span>
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <OwlCarousel
-                className="owl-theme"
-                loop
-                margin={10}
-                nav
-                dots={false}
-                items={4}
-                dragEndSpeed={300}
-                smartSpeed={400}
-                responsive={{
-                  0: { items: 1 },
-                  600: { items: 2 },
-                  900: { items: 3 },
-                  1200: { items: 4 },
-                }}
-              >
-                {collections.map((collection) => (
-                  <div className="item" key={collection.id}>
-                    <div className="nft_coll" style={{ overflow: "hidden", borderRadius: "10px" }}>
-                      <div className="nft_wrap" style={{ overflow: "hidden", marginTop: "-60px", borderRadius: "10px" }}>
-                        <Link to={`/item-details/${collection.nftId}`}>
-                          <img
-                            src={collection.nftImage}
-                            className="lazy img-fluid"
-                            alt=""
-                            style={{ marginTop: "60px" }}
-                            draggable="false"
-                          />
-                        </Link>
-                      </div>
-                      <div className="nft_coll_pp">
-                        <Link to={`/author/${collection.authorId}`}>
-                          <img
-                            className="lazy pp-coll"
-                            src={collection.authorImage}
-                            alt=""
-                            draggable="false"
-                          />
-                        </Link>
-                        <i className="fa fa-check"></i>
-                      </div>
-                      <div className="nft_coll_info">
-                        <Link to="/explore">
-                          <h4>{collection.title}</h4>
-                        </Link>
-                        <span>ERC-{collection.code}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </OwlCarousel>
-            )}
+                </div>
+              ))}
+            </OwlCarousel>
+          )}
           </div>
         </div>
       </div>
