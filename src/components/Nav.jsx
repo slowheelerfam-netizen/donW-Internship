@@ -1,9 +1,16 @@
 import React from "react";
 import Logo from "../images/Ultraverse.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 
-const Nav = () => {
+  const Nav = ({ onLogoClick }) => {
+    const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate("/");
+    onLogoClick();
+  };
+
   const openNav = () => {
     document.body.classList += "menu__open";
   };
@@ -20,10 +27,12 @@ const Nav = () => {
             <div className="de-flex sm-pt10">
               <div className="de-flex-col">
                 <div className="de-flex-col">
-                  <div id="logo">
-                    <Link to="/">
-                      <img alt="" className="logo-2" src={Logo} />
-                    </Link>
+                  <div id="logo" onClick={handleLogoClick} style={{ cursor: "pointer" }}>
+                    <img
+                      alt=""
+                      className="logo-2"
+                      src={Logo}
+                    />
                   </div>
                 </div>
                 <div className="de-flex-col">
@@ -39,28 +48,21 @@ const Nav = () => {
               <div className="de-flex-col header-col-mid">
                 <ul id="mainmenu">
                   <li className="menu-item-has-children has-child">
-                    <Link to="/">
-                      Home<span></span>
-                    </Link>
+                    <Link to="/">Home<span></span></Link>
                   </li>
                   <li className="menu-item-has-children has-child">
-                    <Link to="/explore">
-                      Explore<span></span>
-                    </Link>
+                    <Link to="/explore">Explore<span></span></Link>
                   </li>
                   <li>
                     <Link
                       to="#"
                       className="btn-main connect-wallet"
-                      onClick={() =>
-                        alert("This feature has not been implemented yet")
-                      }
+                      onClick={() => alert("This feature has not been implemented yet")}
                     >
                       Connect wallet
                     </Link>
                   </li>
                 </ul>
-
                 <div className="menu_side_area">
                   <span onClick={() => openNav()} id="menu-btn"></span>
                 </div>
@@ -72,14 +74,10 @@ const Nav = () => {
 
       <ul id="dropdown__wrapper">
         <li className="dropdown__list">
-          <Link to="/" onClick={() => closeNav()}>
-            Home
-          </Link>
+          <Link to="/" onClick={() => closeNav()}>Home</Link>
         </li>
         <li className="dropdown__list">
-          <Link to="/explore" onClick={() => closeNav()}>
-            Explore
-          </Link>
+          <Link to="/explore" onClick={() => closeNav()}>Explore</Link>
         </li>
         <li className="close__button">
           <button onClick={() => closeNav()}>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
 import NftCard from "../home/NftCard";
+import AOS from "aos";
 
 const ExploreItems = () => {
   const [items, setItems] = useState([]);
@@ -28,6 +29,14 @@ const ExploreItems = () => {
 
     fetchItems();
   }, [filter]);
+
+  useEffect(() => {
+    if (items.length > 0) {
+      setTimeout(() => {
+        AOS.refreshHard();
+      }, 100);
+    }
+  }, [items]);
 
   const handleFilter = (e) => {
     setFilter(e.target.value);
@@ -72,15 +81,19 @@ const ExploreItems = () => {
                 </div>
               </div>
             ))
-          : items.slice(0, visibleCount).map((item) => (
-              <div
-                key={item.id}
-                className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                style={{ display: "block", backgroundSize: "cover" }}
-              >
-                <NftCard item={item} />
-              </div>
-            ))}
+        : items.slice(0, visibleCount).map((item, index) => (
+            <div
+              key={item.id}
+              className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12 nft-fade-up"
+              style={{
+                display: "block",
+                backgroundSize: "cover",
+                animationDelay: `${index * 0.1}s`
+              }}
+            >
+              <NftCard item={item} />
+            </div>
+          ))}
       </div>
 
       {!loading && visibleCount < items.length && (

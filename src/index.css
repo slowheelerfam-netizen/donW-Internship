@@ -10,3 +10,20 @@
 @import "./css/styles/style.css";
 @import "./css/colors/scheme-01.css";
 @import "./css/styles/coloring.css";
+
+
+.d-item.nft-fade-up {
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
