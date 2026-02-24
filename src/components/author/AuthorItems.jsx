@@ -13,8 +13,13 @@ const AuthorItems = ({ nftCollection }) => {
                   <SkeletonCard type="nft" />
                 </div>
               ))
-            : nftCollection.map((item) => (
-                <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={item.id}>
+            : nftCollection.map((item, index) => (
+                <div
+                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                  key={item.id}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                >
                   <NftCard item={item} />
                 </div>
               ))}
