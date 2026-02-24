@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const Author = () => {
   const { id } = useParams();
   const [author, setAuthor] = useState(null);
+  const [followed, setFollowed] = useState(false);
+  const [followerCount, setFollowerCount] = useState(null);
 
-useEffect(() => {
-  setAuthor(null);
-  const fetchAuthor = async () => {
-    try {
-      const response = await axios.get(
-        `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
-      );
-      setAuthor(response.data);
-    } catch (error) {
-      console.error("Error fetching author:", error);
-    }
-  };
+  useEffect(() => {
+    setAuthor(null);
+    const fetchAuthor = async () => {
+      try {
+        const response = await axios.get(
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
+        );
+        setAuthor(response.data);
+        setFollowerCount(response.data.followers);
+      } catch (error) {
+        console.error("Error fetching author:", error);
+      }
+    };
 
-  fetchAuthor();
-}, [id]);
+    fetchAuthor();
+  }, [id]);
 
   if (!author) return <div>Loading...</div>;
 
@@ -64,10 +67,16 @@ useEffect(() => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">{author.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
-                      </Link>
+                      <div className="profile_follower">{followerCount} followers</div>
+                      <button
+                        className="btn-main"
+                        onClick={() => {
+                          setFollowed(!followed);
+                          setFollowerCount(followed ? followerCount - 1 : followerCount + 1);
+                        }}
+                      >
+                        {followed ? "Unfollow" : "Follow"}
+                      </button>
                     </div>
                   </div>
                 </div>
