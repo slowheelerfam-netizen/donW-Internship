@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Skeleton from "../UI/Skeleton";
+import SkeletonCard from "../UI/SkeletonCard";
 import NftCard from "../home/NftCard";
 import AOS from "aos";
 
@@ -65,35 +65,22 @@ const ExploreItems = () => {
                 className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
                 style={{ display: "block", backgroundSize: "cover" }}
               >
-                <div className="nft__item">
-                  <div className="author_list_pp">
-                    <Skeleton width="50px" height="50px" borderRadius="50%" />
-                  </div>
-                  <div className="nft__item_wrap" style={{ marginTop: "10px" }}>
-                    <Skeleton width="100%" height="200px" borderRadius="10px" />
-                  </div>
-                  <div className="nft__item_info" style={{ marginTop: "10px" }}>
-                    <Skeleton width="80%" height="18px" borderRadius="4px" />
-                    <div style={{ marginTop: "8px" }}>
-                      <Skeleton width="50%" height="14px" borderRadius="4px" />
-                    </div>
-                  </div>
-                </div>
+                <SkeletonCard type="nft" />
               </div>
             ))
-        : items.slice(0, visibleCount).map((item, index) => (
-            <div
-              key={item.id}
-              className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12 nft-fade-up"
-              style={{
-                display: "block",
-                backgroundSize: "cover",
-                animationDelay: `${index * 0.1}s`
-              }}
-            >
-              <NftCard item={item} />
-            </div>
-          ))}
+          : items.slice(0, visibleCount).map((item, index) => (
+              <div
+                key={item.id}
+                className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12 nft-fade-up"
+                style={{
+                  display: "block",
+                  backgroundSize: "cover",
+                  animationDelay: `${index * 0.1}s`,
+                }}
+              >
+                <NftCard item={item} />
+              </div>
+            ))}
       </div>
 
       {!loading && visibleCount < items.length && (

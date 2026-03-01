@@ -3,7 +3,7 @@ import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import Skeleton from "../UI/Skeleton";
+import SkeletonCard from "../UI/SkeletonCard";
 import NftCard from "./NftCard";
 
 const NewItems = () => {
@@ -41,22 +41,9 @@ const NewItems = () => {
           <div className="col-lg-12">
             {loading ? (
               <div style={{ display: "flex", gap: "10px" }}>
-                {[1, 2, 3, 4].map((i) => (
+                {new Array(4).fill(0).map((_, i) => (
                   <div key={i} style={{ flex: "0 0 25%", padding: "0 10px" }}>
-                    <div className="nft__item">
-                      <div className="author_list_pp">
-                        <Skeleton width="50px" height="50px" borderRadius="50%" />
-                      </div>
-                      <div className="nft__item_wrap" style={{ marginTop: "10px" }}>
-                        <Skeleton width="100%" height="200px" borderRadius="10px" />
-                      </div>
-                      <div className="nft__item_info" style={{ marginTop: "10px" }}>
-                        <Skeleton width="80%" height="18px" borderRadius="4px" />
-                        <div style={{ marginTop: "8px" }}>
-                          <Skeleton width="50%" height="14px" borderRadius="4px" />
-                        </div>
-                      </div>
-                    </div>
+                    <SkeletonCard type="nft" />
                   </div>
                 ))}
               </div>

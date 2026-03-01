@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Skeleton from "../UI/Skeleton";
+import SkeletonCard from "../UI/SkeletonCard";
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
@@ -38,17 +38,7 @@ const TopSellers = () => {
             <ol className="author_list">
               {loading
                 ? new Array(12).fill(0).map((_, index) => (
-                    <li key={index}>
-                      <div className="author_list_pp">
-                        <Skeleton width="50px" height="50px" borderRadius="50%" />
-                      </div>
-                      <div className="author_list_info">
-                        <Skeleton width="120px" height="16px" borderRadius="4px" />
-                        <div style={{ marginTop: "6px" }}>
-                          <Skeleton width="80px" height="14px" borderRadius="4px" />
-                        </div>
-                      </div>
-                    </li>
+                    <SkeletonCard key={index} type="seller" />
                   ))
                 : sellers.map((seller) => (
                     <li key={seller.id}>

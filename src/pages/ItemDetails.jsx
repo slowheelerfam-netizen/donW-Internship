@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EthImage from "../images/ethereum.svg";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import SkeletonCard from "../components/UI/SkeletonCard";
 
 const ItemDetails = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const ItemDetails = () => {
     fetchItem();
   }, [id]);
 
-  if (!item) return <div>Loading...</div>;
+  if (!item) return <SkeletonCard type="item-details" />;
 
   return (
     <div id="wrapper">
@@ -67,7 +68,9 @@ const ItemDetails = () => {
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${item.ownerId}`}>{item.ownerName}</Link>
+                          <Link to={`/author/${item.ownerId}`}>
+                            {item.ownerName}
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -79,12 +82,18 @@ const ItemDetails = () => {
                       <div className="item_author">
                         <div className="author_list_pp">
                           <Link to={`/author/${item.creatorId}`}>
-                            <img className="lazy" src={item.creatorImage} alt="" />
+                            <img
+                              className="lazy"
+                              src={item.creatorImage}
+                              alt=""
+                            />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to={`/author/${item.creatorId}`}>{item.creatorName}</Link>
+                          <Link to={`/author/${item.creatorId}`}>
+                            {item.creatorName}
+                          </Link>
                         </div>
                       </div>
                     </div>
